@@ -1,0 +1,45 @@
+plugins {
+    id "java"
+}
+
+group = "com.zp4rker"
+version = "0.0.1-alpha"
+description = "The revolutionary space-exploration plugin"
+
+def pluginName = "InfinityAndBeyond"
+def pluginPrefix = "IAB"
+def apiVersion = "1.21.1"
+def spigotVersion = "${apiVersion}-R0.1-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url = uri("https://repo.codemc.io/repository/nms/") // For spigot
+    }
+}
+
+dependencies {
+    compileOnly("org.spigotmc:spigot:${spigotVersion}") {
+        exclude group: "com.mojang" // To allow building against Java 8
+    }
+}
+
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.targetCompatibility = JavaVersion.VERSION_1_8
+compileJava.options.compilerArgs << "-parameters"
+
+processResources {
+    def props = [
+            pluginName: pluginName,
+            version: project.version,
+            description: project.description,
+            pluginPrefix: pluginPrefix,
+            apiVersion: apiVersion
+    ]
+    inputs.properties props
+    filteringCharset "UTF-8"
+    filesMatching("plugin.yml") {
+        expand props
+    }
+}
