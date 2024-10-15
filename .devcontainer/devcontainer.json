@@ -21,5 +21,8 @@
       "jdkDistro": "amzn"
     },
   },
-  "remoteUser": "javadev"
+  "remoteUser": "javadev",
+  "mounts": [
+    "type=bind,source=${localEnv:HOME}/.ssh,target=/home/javadev/.ssh,readonly",
+  ],
 }
