@@ -3,17 +3,19 @@ The revolutionary space-exploration plugin.
 
 ## Features
 - [ ] Spaceships
-  - [ ] Register building as spaceship
-  - [ ] Ship fuelling
+  - [ ] Register building as ship
+    - Instead of selecting an area and registering the building within as a ship, should there just be a build mode?
+  - [ ] Fuelling
     - [ ] Consumption of fuel
     - [ ] Topping up of fuel
-  - [ ] Ship condition (damage)
+  - [ ] Condition (damage)
     - [ ] Repairs
     - [ ] Condition affecting ship stats (i.e. speed)
-  - [ ] Ship stats
+  - [ ] Upgrades
     - [ ] Speed
-    - [ ] Strength/health
-  - [ ] Handle ship data
+    - [ ] Health
+    - [ ] Size
+  - [ ] Track data
     - [ ] Name
     - [ ] Captain
     - [ ] Crew
