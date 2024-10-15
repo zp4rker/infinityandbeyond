@@ -8,7 +8,7 @@ public class Spaceship {
     private String name;
     private final Date inauguration = new Date();
 
-    private HumanExplorer captain;
+    private Explorer captain;
     private List<Explorer> crew = new ArrayList<>();
 
     private int health = 100;
@@ -22,7 +22,7 @@ public class Spaceship {
     private float distanceTravelled = 0;
     private int planetsVisited = 0;
 
-    public Spaceship(String name, HumanExplorer captain) {
+    public Spaceship(String name, Explorer captain) {
         this.name = name;
         this.captain = captain;
     }
@@ -39,11 +39,11 @@ public class Spaceship {
         return inauguration;
     }
 
-    public HumanExplorer getCaptain() {
+    public Explorer getCaptain() {
         return captain;
     }
 
-    public void setCaptain(HumanExplorer captain) {
+    public void setCaptain(Explorer captain) {
         this.captain = captain;
     }
 

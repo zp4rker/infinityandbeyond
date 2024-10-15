@@ -4,7 +4,7 @@ import java.util.List;
 
 public class FlightLog {
     private final Spaceship spaceship;
-    private final HumanExplorer captain;
+    private final Explorer captain;
     private final List<Explorer> crew;
 
     private final CelestialLocation locFrom;
@@ -29,7 +29,7 @@ public class FlightLog {
         return spaceship;
     }
 
-    public HumanExplorer getCaptain() {
+    public Explorer getCaptain() {
         return captain;
     }
 
