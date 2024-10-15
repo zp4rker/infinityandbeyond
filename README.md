@@ -43,6 +43,9 @@ Development progress is tracked @ https://trello.com/b/wboaD0Zb
   - [ ] Calculation of flight time between celestial bodies
   - [ ] Flight mode
     - [ ] Handling of copying and breaking down of ship between planets post-flight`
+- [ ] Trading system
+  - [ ] Trading outposts
+    - [ ] Player shops (accessible from any outpost in universe)
 
 ## Considerations
 - How to handle location of ship spawning on planets?
