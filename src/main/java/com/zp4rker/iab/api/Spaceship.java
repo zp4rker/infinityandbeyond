@@ -17,7 +17,7 @@ public class Spaceship {
     private int speed = 1;
     private int size = 1;
 
-    private int flightCount = 0;
+    private int tripCount = 0;
     private float flightTime = 0;
     private float distanceTravelled = 0;
     private int planetsVisited = 0;
@@ -106,12 +106,12 @@ public class Spaceship {
         this.size = size;
     }
 
-    public int getFlightCount() {
-        return flightCount;
+    public int getTripCount() {
+        return tripCount;
     }
 
-    public void incremementFlightCount() {
-        flightCount++;
+    public void incremementTripCount() {
+        tripCount++;
     }
 
     public float getFlightTime() {

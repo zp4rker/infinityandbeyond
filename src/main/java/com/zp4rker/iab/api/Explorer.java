@@ -8,7 +8,7 @@ public class Explorer {
     private final UUID uuid;
     private String name;
 
-    private int flightCount = 0;
+    private int tripCount = 0;
     private float flightTime = 0;
     private float distanceTravelled = 0;
     private int planetsVisited = 0;
@@ -30,12 +30,12 @@ public class Explorer {
         this.name = name;
     }
 
-    public int getFlightCount() {
-        return flightCount;
+    public int getTripCount() {
+        return tripCount;
     }
 
-    public void incrementFlightCount() {
-        flightCount++;
+    public void incrementTripCount() {
+        tripCount++;
     }
 
     public float getFlightTime() {
