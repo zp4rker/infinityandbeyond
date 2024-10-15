@@ -1,6 +1,9 @@
 # Infinity and Beyond
 The revolutionary space-exploration plugin.
 
+## Progress tracking
+Development progress is tracked @ https://trello.com/b/wboaD0Zb
+
 ## Features
 - [ ] Spaceships
   - [ ] Register building as ship
