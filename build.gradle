@@ -20,9 +20,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot:${spigotVersion}") {
-        exclude group: "com.mojang" // To allow building against Java 8
-    }
+    compileOnly("org.spigotmc:spigot-api:${spigotVersion}")
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_1_8
