@@ -1,2 +1,2 @@
-rootProject.name = 'infinityandbeyond'
-
+rootProject.name = "infinityandbeyond"
+include "core"

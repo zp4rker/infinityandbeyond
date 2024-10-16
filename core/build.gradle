@@ -1,0 +1,8 @@
+version = "0.0.1-alpha"
+
+apply from: "${rootDir}/build-logic/common.gradle"
+
+dependencies {
+    compileOnly("org.mongodb:mongodb-driver-sync:4.5.1")
+    compileOnly("dev.morphia.morphia:morphia-core:2.2.6")
+}

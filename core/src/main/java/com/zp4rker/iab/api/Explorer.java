@@ -1,6 +1,6 @@
 package com.zp4rker.iab.api;
 
-import com.zp4rker.iab.InfinityAndBeyond;
+import com.zp4rker.iab.IABCore;
 import com.zp4rker.iab.api.storage.Saveable;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
@@ -70,6 +70,6 @@ public class Explorer extends Saveable {
     }
 
     public static Explorer fromId(UUID id) {
-        return InfinityAndBeyond.DATABASE.find(Explorer.class).filter(Filters.eq("uuid", id)).first();
+        return IABCore.DATABASE.find(Explorer.class).filter(Filters.eq("uuid", id)).first();
     }
 }

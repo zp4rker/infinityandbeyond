@@ -1,5 +1,5 @@
 name: ${pluginName}
-main: com.zp4rker.iab.InfinityAndBeyond
+main: com.zp4rker.iab.IABCore
 version: ${version}
 description: ${description}
 api-version: ${apiVersion}

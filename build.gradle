@@ -1,50 +1,24 @@
 plugins {
-    id "java"
     id "xyz.jpenilla.run-paper" version "2.3.1"
 }
 
 group = "com.zp4rker"
-version = "0.0.1-alpha"
-description = "The revolutionary space-exploration plugin"
-
-def pluginName = "InfinityAndBeyond"
-def pluginPrefix = "IAB"
+description = "The revolutionary space-exploration plugin."
 def apiVersion = "1.21.1"
-def spigotVersion = "${apiVersion}-R0.1-SNAPSHOT"
+project.ext.apiVersion = apiVersion
 
-repositories {
-    mavenCentral()
+evaluationDependsOnChildren()
 
-    maven {
-        url = uri("https://repo.codemc.io/repository/nms/") // For spigot
+runPaper.disablePluginJarDetection()
+subprojects.forEach { p ->
+    try {
+        runServer.pluginJars(p.tasks.shadowJar.archiveFile)
+    } catch (Exception ignored) {
+        runServer.pluginJars(p.tasks.jar.archiveFile)
     }
 }
 
-dependencies {
-    compileOnly("org.spigotmc:spigot-api:${spigotVersion}")
-
-    compileOnly("org.mongodb:mongodb-driver-sync:4.5.1")
-    compileOnly("dev.morphia.morphia:morphia-core:2.2.6")
+runServer {
+    dependsOn subprojects.build
+    minecraftVersion(apiVersion)
 }
-
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-java.targetCompatibility = JavaVersion.VERSION_1_8
-compileJava.options.compilerArgs << "-parameters"
-compileJava.options.compilerArgs << "-Xlint:-options"
-
-processResources {
-    def props = [
-            pluginName  : pluginName,
-            version     : project.version,
-            description : project.description,
-            pluginPrefix: pluginPrefix,
-            apiVersion  : apiVersion
-    ]
-    inputs.properties props
-    filteringCharset "UTF-8"
-    filesMatching("plugin.yml") {
-        expand props
-    }
-}
-
-runServer.minecraftVersion(apiVersion)

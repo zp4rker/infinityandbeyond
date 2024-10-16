@@ -1,6 +1,6 @@
 package com.zp4rker.iab.api;
 
-import com.zp4rker.iab.InfinityAndBeyond;
+import com.zp4rker.iab.IABCore;
 import com.zp4rker.iab.api.storage.Saveable;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
@@ -167,6 +167,6 @@ public class Spaceship extends Saveable {
     }
 
     public static Spaceship fromName(String name) {
-        return InfinityAndBeyond.DATABASE.find(Spaceship.class).filter(Filters.eq("name", name)).first();
+        return IABCore.DATABASE.find(Spaceship.class).filter(Filters.eq("name", name)).first();
     }
 }

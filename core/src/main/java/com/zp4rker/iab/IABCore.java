@@ -18,7 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
 
-public class InfinityAndBeyond extends JavaPlugin {
+public class IABCore extends JavaPlugin {
     public static Logger LOGGER;
 
     @Override
