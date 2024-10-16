@@ -3,21 +3,22 @@ package com.zp4rker.iab.api;
 import com.zp4rker.iab.api.storage.Saveable;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
-import dev.morphia.annotations.Reference;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity("spaceships")
 public class Spaceship extends Saveable {
+    @Id
     private String name;
     private final Date inauguration = new Date();
 
     private PlanetaryLocation location;
 
-    private Explorer captain;
+    private UUID captainId;
     private List<Explorer> crew = new ArrayList<>();
 
     private int health = 100;
@@ -33,7 +34,7 @@ public class Spaceship extends Saveable {
 
     public Spaceship(String name, Explorer captain, PlanetaryLocation location) {
         this.name = name;
-        this.captain = captain;
+        this.captainId = captain.getUUID();
         this.location = location;
     }
 
@@ -57,12 +58,20 @@ public class Spaceship extends Saveable {
         this.location = location;
     }
 
+    public UUID getCaptainId() {
+        return captainId;
+    }
+
+    public void setCaptainId(UUID captainId) {
+        this.captainId = captainId;
+    }
+
     public Explorer getCaptain() {
-        return captain;
+        return Explorer.fromId(captainId);
     }
 
     public void setCaptain(Explorer captain) {
-        this.captain = captain;
+        this.captainId = captain.getUUID();
     }
 
     public List<Explorer> getCrew() {

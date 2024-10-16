@@ -17,7 +17,7 @@ public class PlaneteryLocationCodec implements Codec<PlanetaryLocation> {
     public void encode(BsonWriter writer, PlanetaryLocation value, EncoderContext encoderContext) {
         writer.writeStartDocument();
         writer.writeName("planet");
-        writer.writeObjectId(value.getPlanet().getId());
+        writer.writeString(value.getPlanet().getName());
         writer.writeName("position");
         writer.writeStartDocument();
         writer.writeName("x");

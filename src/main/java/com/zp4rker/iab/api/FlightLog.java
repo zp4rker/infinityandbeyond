@@ -2,12 +2,17 @@ package com.zp4rker.iab.api;
 
 import com.zp4rker.iab.api.storage.Saveable;
 import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
 import dev.morphia.annotations.Reference;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 
 @Entity("flightlogs")
 public class FlightLog extends Saveable {
+    @Id
+    private ObjectId id;
+
     private final Spaceship spaceship;
     private final Explorer captain;
     private final List<Explorer> crew;

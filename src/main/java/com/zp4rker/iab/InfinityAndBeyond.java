@@ -6,8 +6,7 @@ import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.zp4rker.iab.api.*;
-import com.zp4rker.iab.api.storage.CelestialLocationCodec;
-import com.zp4rker.iab.api.storage.PlaneteryLocationCodec;
+import com.zp4rker.iab.api.storage.*;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import org.bson.codecs.configuration.CodecRegistries;
@@ -47,6 +46,8 @@ public class InfinityAndBeyond extends JavaPlugin implements Listener {
         explorer.save();
         spaceship.save();
         flightLog.save();
+
+        LOGGER.info(spaceship.getCaptain().getName());
     }
 
     private void registerCommands() {
@@ -66,7 +67,11 @@ public class InfinityAndBeyond extends JavaPlugin implements Listener {
         try {
             assert connectionString != null;
             MongoClientSettings settings = MongoClientSettings.builder().codecRegistry(CodecRegistries.fromRegistries(
-                    CodecRegistries.fromCodecs(new CelestialLocationCodec(), new PlaneteryLocationCodec()),
+                    CodecRegistries.fromCodecs(
+                            new CelestialLocationCodec(),
+                            new PlaneteryLocationCodec(),
+                            new UUIDCodec()
+                    ),
                     MongoClientSettings.getDefaultCodecRegistry()
             )).applyConnectionString(new ConnectionString(connectionString)).build();
             DATABASE = Morphia.createDatastore(MongoClients.create(settings), "infinityandbeyond");

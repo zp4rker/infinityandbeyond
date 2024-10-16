@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 
 @Entity("planets")
 public class Planet extends Saveable {
+    @Id
     private final String name;
     private final CelestialLocation location;
 
