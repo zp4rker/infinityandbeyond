@@ -3,23 +3,22 @@ package com.zp4rker.iab;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
-import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import com.zp4rker.iab.api.*;
-import com.zp4rker.iab.api.storage.*;
+import com.zp4rker.iab.api.Explorer;
+import com.zp4rker.iab.api.FlightLog;
+import com.zp4rker.iab.api.Planet;
+import com.zp4rker.iab.api.Spaceship;
+import com.zp4rker.iab.api.storage.CelestialLocationCodec;
+import com.zp4rker.iab.api.storage.PlaneteryLocationCodec;
+import com.zp4rker.iab.api.storage.UUIDCodec;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import org.bson.codecs.configuration.CodecRegistries;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Arrays;
 import java.util.logging.Logger;
 
-public class InfinityAndBeyond extends JavaPlugin implements Listener {
+public class InfinityAndBeyond extends JavaPlugin {
     public static Logger LOGGER;
 
     @Override
@@ -34,30 +33,12 @@ public class InfinityAndBeyond extends JavaPlugin implements Listener {
         setupDatabase();
     }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        Planet planet = new Planet("Origin", new CelestialLocation(0, 0), 100, 100);
-        planet.save();
-
-        Explorer explorer = new Explorer(event.getPlayer(), event.getPlayer().getName());
-        Spaceship spaceship = new Spaceship("The Explorer", explorer, new PlanetaryLocation(planet, 0, 50, 0));
-        FlightLog flightLog = new FlightLog(spaceship, new CelestialLocation(0, 0), new CelestialLocation(1, 1));
-
-        explorer.save();
-        spaceship.save();
-        flightLog.save();
-
-        LOGGER.info(spaceship.getCaptain().getName());
-    }
-
     private void registerCommands() {
         // Register commands
     }
 
     private void registerListeners() {
-        Arrays.asList(
-                this
-        ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+        // Arrays.asList().forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
     public static Datastore DATABASE;

@@ -34,11 +34,11 @@ compileJava.options.compilerArgs << "-Xlint:-options"
 
 processResources {
     def props = [
-            pluginName: pluginName,
-            version: project.version,
-            description: project.description,
+            pluginName  : pluginName,
+            version     : project.version,
+            description : project.description,
             pluginPrefix: pluginPrefix,
-            apiVersion: apiVersion
+            apiVersion  : apiVersion
     ]
     inputs.properties props
     filteringCharset "UTF-8"
