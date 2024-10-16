@@ -1,8 +1,10 @@
 package com.zp4rker.iab.api;
 
+import com.zp4rker.iab.InfinityAndBeyond;
 import com.zp4rker.iab.api.storage.Saveable;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
+import dev.morphia.query.experimental.filters.Filters;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public class Spaceship extends Saveable {
     private PlanetaryLocation location;
 
     private UUID captainId;
-    private List<Explorer> crew = new ArrayList<>();
+    private List<UUID> crew = new ArrayList<>();
 
     private int health = 100;
 
@@ -74,19 +76,19 @@ public class Spaceship extends Saveable {
         this.captainId = captain.getUUID();
     }
 
-    public List<Explorer> getCrew() {
+    public List<UUID> getCrew() {
         return crew;
     }
 
     public void addToCrew(Explorer explorer) {
-        crew.add(explorer);
+        crew.add(explorer.getUUID());
     }
 
     public void removeFromCrew(Explorer explorer) {
-        crew.remove(explorer);
+        crew.remove(explorer.getUUID());
     }
 
-    public void setCrew(List<Explorer> crew) {
+    public void setCrew(List<UUID> crew) {
         this.crew = crew;
     }
 
@@ -163,5 +165,9 @@ public class Spaceship extends Saveable {
 
     public void incremePlanetsVisited() {
         planetsVisited++;
+    }
+
+    public static Spaceship fromName(String name) {
+        return InfinityAndBeyond.DATABASE.find(Spaceship.class).filter(Filters.eq("name", name)).first();
     }
 }

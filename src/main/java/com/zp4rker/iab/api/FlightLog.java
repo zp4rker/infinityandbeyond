@@ -3,19 +3,19 @@ package com.zp4rker.iab.api;
 import com.zp4rker.iab.api.storage.Saveable;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
-import dev.morphia.annotations.Reference;
 import org.bson.types.ObjectId;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity("flightlogs")
 public class FlightLog extends Saveable {
     @Id
     private ObjectId id;
 
-    private final Spaceship spaceship;
-    private final Explorer captain;
-    private final List<Explorer> crew;
+    private final String spaceshipName;
+    private final UUID captainId;
+    private final List<UUID> crew;
 
     private final CelestialLocation locFrom;
     private final CelestialLocation locTo;
@@ -24,8 +24,8 @@ public class FlightLog extends Saveable {
     private /*final*/ float flightDistance;
 
     public FlightLog(Spaceship spaceship, CelestialLocation locFrom, CelestialLocation locTo) {
-        this.spaceship = spaceship;
-        this.captain = spaceship.getCaptain();
+        this.spaceshipName = spaceship.getName();
+        this.captainId = spaceship.getCaptainId();
         this.crew = spaceship.getCrew();
 
         this.locFrom = locFrom;
@@ -35,15 +35,23 @@ public class FlightLog extends Saveable {
         // Calculate flightDistance
     }
 
+    public String getSpaceshipName() {
+        return spaceshipName;
+    }
+
     public Spaceship getSpaceship() {
-        return spaceship;
+        return Spaceship.fromName(spaceshipName);
+    }
+
+    public UUID getCaptainId() {
+        return captainId;
     }
 
     public Explorer getCaptain() {
-        return captain;
+        return Explorer.fromId(captainId);
     }
 
-    public List<Explorer> getCrew() {
+    public List<UUID> getCrew() {
         return crew;
     }
 
