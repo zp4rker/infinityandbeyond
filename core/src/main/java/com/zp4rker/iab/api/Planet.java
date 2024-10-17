@@ -1,6 +1,6 @@
 package com.zp4rker.iab.api;
 
-import com.zp4rker.iab.api.storage.Saveable;
+import com.zp4rker.iab.api.db.Saveable;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 

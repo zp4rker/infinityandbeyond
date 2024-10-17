@@ -1,4 +1,4 @@
-package com.zp4rker.iab.api.storage;
+package com.zp4rker.iab.api.db;
 
 import com.zp4rker.iab.api.PlanetaryLocation;
 import org.bson.BsonReader;
