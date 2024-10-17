@@ -39,8 +39,8 @@ public class Spaceships {
                     "planetsVisited INT DEFAULT 0," +
 
                     "PRIMARY KEY (id)," +
-                    "FOREIGN KEY (capitan) REFERENCES explorers(id)" +
-                    ")");
+                    "FOREIGN KEY (capitan) REFERENCES explorers(id))"
+            ).execute();
         }
     }
 
@@ -65,7 +65,7 @@ public class Spaceships {
                         "distanceTravelled =" + spaceship.getDistanceTravelled() + "," +
                         "planetsVisited = " + spaceship.getPlanetsVisited() +
                         " WHERE id = " + id
-                );
+                ).execute();
             } else {
                 c.prepareStatement("INSERT INTO " + table + "(" +
                         "name," +
@@ -98,9 +98,8 @@ public class Spaceships {
                         spaceship.getTripCount() + "," +
                         spaceship.getFlightTime() + "," +
                         spaceship.getDistanceTravelled() + "," +
-                        spaceship.getPlanetsVisited() +
-                        ")"
-                );
+                        spaceship.getPlanetsVisited() + ")"
+                ).execute();
             }
         }
     }
@@ -109,14 +108,18 @@ public class Spaceships {
         try (Connection c = IABCore.DB_MANAGER.openConnection()) {
             int id = getId(spaceship);
             if (id != -1) {
-                c.prepareStatement("DELETE FROM " + table + " WHERE id = " + id).execute();
+                c.prepareStatement(
+                        "DELETE FROM " + table + " WHERE id = " + id
+                ).execute();
             }
         }
     }
 
     public static Spaceship find(String name) {
         try (Connection c = IABCore.DB_MANAGER.openConnection()) {
-            ResultSet rs = c.prepareStatement("SELECT * FROM " + table + " WHERE name = " + name).executeQuery();
+            ResultSet rs = c.prepareStatement(
+                    "SELECT * FROM " + table + " WHERE name = " + name
+            ).executeQuery();
             Date date = rs.getDate("inauguration");
             Explorer captain = Explorers.fromId(rs.getInt("captain"));
             // todo: fetch crew

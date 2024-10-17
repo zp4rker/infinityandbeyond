@@ -23,8 +23,8 @@ public class Explorers {
                     "distanceTravelled FLOAT DEFAULT 0," +
                     "planetsVisited INT DEFAULT 0," +
 
-                    "PRIMARY KEY (id)" +
-                    ")").execute();
+                    "PRIMARY KEY (id))"
+            ).execute();
         }
     }
 
@@ -47,8 +47,7 @@ public class Explorers {
                         explorer.getTripCount() + "," +
                         explorer.getFlightTime() + "," +
                         explorer.getDistanceTravelled() + "," +
-                        explorer.getPlanetsVisited() +
-                        ")"
+                        explorer.getPlanetsVisited() + ")"
                 ).execute();
             }
         }
@@ -58,14 +57,18 @@ public class Explorers {
         try (Connection c = IABCore.DB_MANAGER.openConnection()) {
             int id = getId(explorer);
             if (id != -1) {
-                c.prepareStatement("DELETE FROM " + table + " WHERE id = " + id).execute();
+                c.prepareStatement(
+                        "DELETE FROM " + table + " WHERE id = " + id
+                ).execute();
             }
         }
     }
 
     public static Explorer find(UUID uuid) {
         try (Connection c = IABCore.DB_MANAGER.openConnection()) {
-            ResultSet rs = c.prepareStatement("SELECT * FROM " + table + " WHERE uuid = " + uuid).executeQuery();
+            ResultSet rs = c.prepareStatement(
+                    "SELECT * FROM " + table + " WHERE uuid = " + uuid
+            ).executeQuery();
             return constructFromResultSet(uuid, rs);
         } catch (SQLException e) {
             return null;
@@ -84,7 +87,9 @@ public class Explorers {
 
     public static Explorer fromId(int id) {
         try (Connection c = IABCore.DB_MANAGER.openConnection()) {
-            ResultSet rs = c.prepareStatement("SELECT * FROM " + table + " WHERE id = " + id).executeQuery();
+            ResultSet rs = c.prepareStatement(
+                    "SELECT * FROM " + table + " WHERE id = " + id
+            ).executeQuery();
             UUID uuid = UUID.fromString(rs.getString("uuid"));
             return constructFromResultSet(uuid, rs);
         } catch (SQLException e) {
