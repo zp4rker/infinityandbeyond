@@ -6,23 +6,39 @@ import java.util.List;
 
 public class Spaceship {
     private String name;
-    private final Date inauguration = new Date();
-
-    private PlanetaryLocation location;
+    private Date inauguration = new Date();
 
     private Explorer captain;
     private List<Explorer> crew = new ArrayList<>();
+
+    private PlanetaryLocation location;
 
     private int health = 100;
 
     private int maxHealth = 100;
     private int speed = 1;
-    private int size = 1;
+    private int maxSize = 10;
 
     private int tripCount = 0;
     private float flightTime = 0;
     private float distanceTravelled = 0;
     private int planetsVisited = 0;
+
+    public Spaceship(String name, Date inauguration, Explorer captain, List<Explorer> crew, PlanetaryLocation location, int health, int maxHealth, int speed, int maxSize, int tripCount, float flightTime, float distanceTravelled, int planetsVisited) {
+        this.name = name;
+        this.inauguration = inauguration;
+        this.location = location;
+        this.captain = captain;
+        this.crew = crew;
+        this.health = health;
+        this.maxHealth = maxHealth;
+        this.speed = speed;
+        this.maxSize = maxSize;
+        this.tripCount = tripCount;
+        this.flightTime = flightTime;
+        this.distanceTravelled = distanceTravelled;
+        this.planetsVisited = planetsVisited;
+    }
 
     public Spaceship(String name, Explorer captain, PlanetaryLocation location) {
         this.name = name;
@@ -109,12 +125,12 @@ public class Spaceship {
         this.speed = speed;
     }
 
-    public int getSize() {
-        return size;
+    public int getMaxSize() {
+        return maxSize;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
     }
 
     public int getTripCount() {

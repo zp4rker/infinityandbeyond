@@ -18,6 +18,15 @@ public class Explorer {
         this.name = name;
     }
 
+    public Explorer(UUID uuid, String name, int tripCount, float flightTime, float distanceTravelled, int planetsVisited) {
+        this.uuid = uuid;
+        this.name = name;
+        this.tripCount = tripCount;
+        this.flightTime = flightTime;
+        this.distanceTravelled = distanceTravelled;
+        this.planetsVisited = planetsVisited;
+    }
+
     public UUID getUUID() {
         return uuid;
     }
