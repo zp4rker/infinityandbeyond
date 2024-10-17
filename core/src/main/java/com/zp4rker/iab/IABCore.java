@@ -13,17 +13,25 @@ import com.zp4rker.iab.api.storage.PlaneteryLocationCodec;
 import com.zp4rker.iab.api.storage.UUIDCodec;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.filter.AbstractFilter;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
 
 public class IABCore extends JavaPlugin {
+    public static IABCore INST;
     public static Logger LOGGER;
 
     @Override
     public void onEnable() {
+        INST = this;
         LOGGER = getLogger();
+
+        disableMongoLoggers();
 
         saveDefaultConfig();
 
@@ -62,5 +70,16 @@ public class IABCore extends JavaPlugin {
             LOGGER.warning("Invalid connection string, or unable to connect to database server! Shutting down...");
             getServer().getPluginManager().disablePlugin(this);
         }
+    }
+
+    private void disableMongoLoggers() {
+        ((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger()).addFilter(new AbstractFilter() {
+            @Override
+            public Result filter(LogEvent event) {
+                if (event == null) return Result.NEUTRAL;
+                if (event.getLoggerName().contains("org.mongodb") && event.getLevel().isLessSpecificThan(Level.WARN)) return Result.DENY;
+                return Result.NEUTRAL;
+            }
+        });
     }
 }
