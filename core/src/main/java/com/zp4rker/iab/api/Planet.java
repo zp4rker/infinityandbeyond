@@ -1,12 +1,6 @@
 package com.zp4rker.iab.api;
 
-import com.zp4rker.iab.api.db.Saveable;
-import dev.morphia.annotations.Entity;
-import dev.morphia.annotations.Id;
-
-@Entity("planets")
-public class Planet extends Saveable {
-    @Id
+public class Planet {
     private final String name;
     private final CelestialLocation location;
 

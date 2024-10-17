@@ -4,6 +4,3 @@ version: ${version}
 description: ${description}
 api-version: ${apiVersion}
 prefix: ${pluginPrefix}
-libraries:
-  - org.mongodb:mongodb-driver-sync:4.5.1
-  - dev.morphia.morphia:morphia-core:2.2.6

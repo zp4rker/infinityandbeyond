@@ -1,26 +1,17 @@
 package com.zp4rker.iab.api;
 
-import com.zp4rker.iab.IABCore;
-import com.zp4rker.iab.api.db.Saveable;
-import dev.morphia.annotations.Entity;
-import dev.morphia.annotations.Id;
-import dev.morphia.query.experimental.filters.Filters;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
-@Entity("spaceships")
-public class Spaceship extends Saveable {
-    @Id
+public class Spaceship {
     private String name;
     private final Date inauguration = new Date();
 
     private PlanetaryLocation location;
 
-    private UUID captainId;
-    private List<UUID> crew = new ArrayList<>();
+    private Explorer captain;
+    private List<Explorer> crew = new ArrayList<>();
 
     private int health = 100;
 
@@ -35,7 +26,7 @@ public class Spaceship extends Saveable {
 
     public Spaceship(String name, Explorer captain, PlanetaryLocation location) {
         this.name = name;
-        this.captainId = captain.getUUID();
+        this.captain = captain;
         this.location = location;
     }
 
@@ -59,35 +50,27 @@ public class Spaceship extends Saveable {
         this.location = location;
     }
 
-    public UUID getCaptainId() {
-        return captainId;
-    }
-
-    public void setCaptainId(UUID captainId) {
-        this.captainId = captainId;
-    }
-
     public Explorer getCaptain() {
-        return Explorer.fromId(captainId);
+        return captain;
     }
 
     public void setCaptain(Explorer captain) {
-        this.captainId = captain.getUUID();
+        this.captain = captain;
     }
 
-    public List<UUID> getCrew() {
+    public List<Explorer> getCrew() {
         return crew;
     }
 
     public void addToCrew(Explorer explorer) {
-        crew.add(explorer.getUUID());
+        crew.add(explorer);
     }
 
     public void removeFromCrew(Explorer explorer) {
-        crew.remove(explorer.getUUID());
+        crew.remove(explorer);
     }
 
-    public void setCrew(List<UUID> crew) {
+    public void setCrew(List<Explorer> crew) {
         this.crew = crew;
     }
 
@@ -164,9 +147,5 @@ public class Spaceship extends Saveable {
 
     public void incremePlanetsVisited() {
         planetsVisited++;
-    }
-
-    public static Spaceship fromName(String name) {
-        return IABCore.DATABASE.find(Spaceship.class).filter(Filters.eq("name", name)).first();
     }
 }

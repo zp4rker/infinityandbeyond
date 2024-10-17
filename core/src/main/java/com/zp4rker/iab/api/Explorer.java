@@ -1,18 +1,11 @@
 package com.zp4rker.iab.api;
 
-import com.zp4rker.iab.IABCore;
-import com.zp4rker.iab.api.db.Saveable;
-import dev.morphia.annotations.Entity;
-import dev.morphia.annotations.Id;
-import dev.morphia.query.experimental.filters.Filters;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-@Entity("explorers")
-public class Explorer extends Saveable {
-    @Id
-    private final String uuid;
+public class Explorer {
+    private final UUID uuid;
     private String name;
 
     private int tripCount = 0;
@@ -21,12 +14,12 @@ public class Explorer extends Saveable {
     private int planetsVisited = 0;
 
     public Explorer(Player player, String name) {
-        this.uuid = player.getUniqueId().toString();
+        this.uuid = player.getUniqueId();
         this.name = name;
     }
 
     public UUID getUUID() {
-        return UUID.fromString(uuid);
+        return uuid;
     }
 
     public String getName() {
@@ -67,9 +60,5 @@ public class Explorer extends Saveable {
 
     public void incrementPlanetsVisited() {
         planetsVisited++;
-    }
-
-    public static Explorer fromId(UUID id) {
-        return IABCore.DATABASE.find(Explorer.class).filter(Filters.eq("uuid", id)).first();
     }
 }
