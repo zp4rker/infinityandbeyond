@@ -14,6 +14,8 @@ public class Explorer {
     private UUID uuid;
     @DatabaseField(unique = true, canBeNull = false)
     private String name;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Spaceship spaceship;
 
     @DatabaseField
     private int tripCount = 0;
@@ -51,6 +53,14 @@ public class Explorer {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Spaceship getSpaceship() {
+        return spaceship;
+    }
+
+    public void setSpaceship(Spaceship spaceship) {
+        this.spaceship = spaceship;
     }
 
     public int getTripCount() {

@@ -18,7 +18,6 @@ public class Spaceship {
 
     @DatabaseField(canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Explorer captain;
-    private List<Explorer> crew = new ArrayList<>();
 
     @DatabaseField(foreign = true)
     private Planet planet;
@@ -44,13 +43,12 @@ public class Spaceship {
     @DatabaseField
     private int planetsVisited = 0;
 
-    public Spaceship(String name, Date inauguration, Explorer captain, List<Explorer> crew, PlanetaryLocation location, int health, int maxHealth, int speed, int maxSize, int tripCount, float flightTime, float distanceTravelled, int planetsVisited) {
+    public Spaceship(String name, Date inauguration, Explorer captain, PlanetaryLocation location, int health, int maxHealth, int speed, int maxSize, int tripCount, float flightTime, float distanceTravelled, int planetsVisited) {
         this.name = name;
         this.inauguration = inauguration;
         this.planet = location.getPlanet();
         this.location = location.getLoc();
         this.captain = captain;
-        this.crew = crew;
         this.health = health;
         this.maxHealth = maxHealth;
         this.speed = speed;
@@ -98,22 +96,6 @@ public class Spaceship {
 
     public void setCaptain(Explorer captain) {
         this.captain = captain;
-    }
-
-    public List<Explorer> getCrew() {
-        return crew;
-    }
-
-    public void addToCrew(Explorer explorer) {
-        crew.add(explorer);
-    }
-
-    public void removeFromCrew(Explorer explorer) {
-        crew.remove(explorer);
-    }
-
-    public void setCrew(List<Explorer> crew) {
-        this.crew = crew;
     }
 
     public int getHealth() {
