@@ -23,12 +23,15 @@ public class DBManager {
     public DBManager(String connectionStr) throws SQLException {
         cs = new JdbcConnectionSource(connectionStr);
 
+        DataPersisterManager.registerDataPersisters(LocPersister.getSingleton());
+
         planetDao = DaoManager.createDao(cs, Planet.class);
         explorerDao = DaoManager.createDao(cs, Explorer.class);
         spaceshipDao = DaoManager.createDao(cs, Spaceship.class);
     }
 
     public void createTables() throws SQLException {
+        TableUtils.createTableIfNotExists(cs, Planet.class);
         TableUtils.createTableIfNotExists(cs, Explorer.class);
         TableUtils.createTableIfNotExists(cs, Spaceship.class);
     }
@@ -38,7 +41,7 @@ public class DBManager {
     }
 
     public void savePlanet(Planet planet) throws SQLException {
-        planetDao.create(planet);
+        planetDao.createOrUpdate(planet);
     }
 
     public void deletePlanet(Planet planet) throws SQLException {

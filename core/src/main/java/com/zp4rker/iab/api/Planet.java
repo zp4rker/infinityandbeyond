@@ -3,26 +3,30 @@ package com.zp4rker.iab.api;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.zp4rker.iab.IABCore;
+import com.zp4rker.iab.db.LocPersister;
 
 import java.sql.SQLException;
 
 @DatabaseTable(tableName = "planets")
 public class Planet {
     @DatabaseField(id = true)
-    private final String name;
-    @DatabaseField
-    private final Loc location;
+    private String name;
+    @DatabaseField(persisterClass = LocPersister.class)
+    private Loc location;
 
     @DatabaseField
-    private final int width;
+    private int width;
     @DatabaseField
-    private final int height;
+    private int height;
 
     public Planet(String name, Loc location, int width, int height) {
         this.name = name;
         this.location = location;
         this.width = width;
         this.height = height;
+    }
+
+    public Planet() {
     }
 
     public String getName() {

@@ -68,6 +68,9 @@ public class Spaceship {
         this.location = location.getLoc();
     }
 
+    public Spaceship() {
+    }
+
     public String getName() {
         return name;
     }

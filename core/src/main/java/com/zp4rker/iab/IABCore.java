@@ -1,16 +1,11 @@
 package com.zp4rker.iab;
 
-import com.zp4rker.iab.api.Explorer;
-import com.zp4rker.iab.api.Loc;
-import com.zp4rker.iab.api.Planet;
-import com.zp4rker.iab.api.PlanetaryLocation;
-import com.zp4rker.iab.api.Spaceship;
+import com.zp4rker.iab.api.*;
 import com.zp4rker.iab.db.DBManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class IABCore extends JavaPlugin {
@@ -35,7 +30,9 @@ public class IABCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        DB_MANAGER.closeConnection();
+        if (DB_MANAGER != null) {
+            DB_MANAGER.closeConnection();
+        }
     }
 
     private void registerCommands() {
@@ -46,13 +43,16 @@ public class IABCore extends JavaPlugin {
         // Arrays.asList().forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
-    public static DBManager DB_MANAGER;
+    public static DBManager DB_MANAGER = null;
+
     private void connectDatabase() {
         String connectionStr = getConfig().getString("database.connectionString");
         try {
             DB_MANAGER = new DBManager(connectionStr);
+            LOGGER.info("Connected to database");
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Unable to connect to database! Shutting down...");
+            LOGGER.severe("Unable to connect to database! Shutting down...");
+            e.printStackTrace();
             getServer().getPluginManager().disablePlugin(this);
         }
     }
@@ -60,8 +60,10 @@ public class IABCore extends JavaPlugin {
     private void createTables() {
         try {
             DB_MANAGER.createTables();
+            LOGGER.info("Created tables");
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Unable to create tables! Shutting down...");
+            LOGGER.severe("Unable to create tables! Shutting down...");
+            e.printStackTrace();
             getServer().getPluginManager().disablePlugin(this);
         }
     }

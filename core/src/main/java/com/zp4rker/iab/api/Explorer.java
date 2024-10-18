@@ -11,7 +11,7 @@ import java.util.UUID;
 @DatabaseTable(tableName = "explorers")
 public class Explorer {
     @DatabaseField(id = true)
-    private final UUID uuid;
+    private UUID uuid;
     @DatabaseField(unique = true, canBeNull = false)
     private String name;
 
@@ -27,6 +27,9 @@ public class Explorer {
     public Explorer(Player player, String name) {
         this.uuid = player.getUniqueId();
         this.name = name;
+    }
+
+    public Explorer() {
     }
 
     public Explorer(UUID uuid, String name, int tripCount, float flightTime, float distanceTravelled, int planetsVisited) {
