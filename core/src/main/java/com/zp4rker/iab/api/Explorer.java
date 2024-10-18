@@ -1,16 +1,27 @@
 package com.zp4rker.iab.api;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+import com.zp4rker.iab.IABCore;
 import org.bukkit.entity.Player;
 
+import java.sql.SQLException;
 import java.util.UUID;
 
+@DatabaseTable(tableName = "explorers")
 public class Explorer {
+    @DatabaseField(id = true)
     private final UUID uuid;
+    @DatabaseField(unique = true, canBeNull = false)
     private String name;
 
+    @DatabaseField
     private int tripCount = 0;
+    @DatabaseField
     private float flightTime = 0;
+    @DatabaseField
     private float distanceTravelled = 0;
+    @DatabaseField
     private int planetsVisited = 0;
 
     public Explorer(Player player, String name) {
@@ -69,5 +80,35 @@ public class Explorer {
 
     public void incrementPlanetsVisited() {
         planetsVisited++;
+    }
+
+    public boolean save() {
+        try {
+            IABCore.DB_MANAGER.saveExplorer(this);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    public boolean delete() {
+        try {
+            IABCore.DB_MANAGER.deleteExplorer(this);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    public boolean inDatabase() {
+        return find(uuid) != null;
+    }
+
+    public static Explorer find(UUID uuid) {
+        try {
+            return IABCore.DB_MANAGER.findExplorer(uuid);
+        } catch (SQLException e) {
+            return null;
+        }
     }
 }

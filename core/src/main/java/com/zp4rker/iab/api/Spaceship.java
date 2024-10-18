@@ -1,33 +1,54 @@
 package com.zp4rker.iab.api;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+import com.zp4rker.iab.IABCore;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@DatabaseTable(tableName = "spaceships")
 public class Spaceship {
+    @DatabaseField(id = true)
     private String name;
+    @DatabaseField(canBeNull = false)
     private Date inauguration = new Date();
 
+    @DatabaseField(canBeNull = false, foreign = true, foreignAutoRefresh = true)
     private Explorer captain;
     private List<Explorer> crew = new ArrayList<>();
 
-    private PlanetaryLocation location;
+    @DatabaseField(foreign = true)
+    private Planet planet;
+    @DatabaseField
+    private Loc location;
 
+    @DatabaseField
     private int health = 100;
 
+    @DatabaseField
     private int maxHealth = 100;
+    @DatabaseField
     private int speed = 1;
+    @DatabaseField
     private int maxSize = 10;
 
+    @DatabaseField
     private int tripCount = 0;
+    @DatabaseField
     private float flightTime = 0;
+    @DatabaseField
     private float distanceTravelled = 0;
+    @DatabaseField
     private int planetsVisited = 0;
 
     public Spaceship(String name, Date inauguration, Explorer captain, List<Explorer> crew, PlanetaryLocation location, int health, int maxHealth, int speed, int maxSize, int tripCount, float flightTime, float distanceTravelled, int planetsVisited) {
         this.name = name;
         this.inauguration = inauguration;
-        this.location = location;
+        this.planet = location.getPlanet();
+        this.location = location.getLoc();
         this.captain = captain;
         this.crew = crew;
         this.health = health;
@@ -43,7 +64,8 @@ public class Spaceship {
     public Spaceship(String name, Explorer captain, PlanetaryLocation location) {
         this.name = name;
         this.captain = captain;
-        this.location = location;
+        this.planet = location.getPlanet();
+        this.location = location.getLoc();
     }
 
     public String getName() {
@@ -59,11 +81,12 @@ public class Spaceship {
     }
 
     public PlanetaryLocation getLocation() {
-        return location;
+        return new PlanetaryLocation(planet, location.getX(), location.getY(), location.getZ());
     }
 
     public void setLocation(PlanetaryLocation location) {
-        this.location = location;
+        this.planet = location.getPlanet();
+        this.location = location.getLoc();
     }
 
     public Explorer getCaptain() {
@@ -163,5 +186,35 @@ public class Spaceship {
 
     public void incremePlanetsVisited() {
         planetsVisited++;
+    }
+
+    public boolean save() {
+        try {
+            IABCore.DB_MANAGER.saveSpaceship(this);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    public boolean delete() {
+        try {
+            IABCore.DB_MANAGER.deleteSpaceship(this);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    public boolean inDatabase() {
+        return find(name) != null;
+    }
+
+    public static Spaceship find(String name) {
+        try {
+            return IABCore.DB_MANAGER.findSpaceship(name);
+        } catch (SQLException e) {
+            return null;
+        }
     }
 }

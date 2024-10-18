@@ -1,3 +1,7 @@
 version = "0.0.1-alpha"
 
 apply from: "${rootDir}/build-logic/common.gradle"
+
+dependencies {
+    compileOnly("com.j256.ormlite:ormlite-jdbc:6.1")
+}

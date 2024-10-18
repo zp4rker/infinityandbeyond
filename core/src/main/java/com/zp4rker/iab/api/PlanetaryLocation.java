@@ -38,4 +38,8 @@ public class PlanetaryLocation {
     public void setZ(int z) {
         this.z = z;
     }
+
+    public Loc getLoc() {
+        return new Loc(x, y, z);
+    }
 }

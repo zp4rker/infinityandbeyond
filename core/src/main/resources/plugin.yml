@@ -4,3 +4,5 @@ version: ${version}
 description: ${description}
 api-version: ${apiVersion}
 prefix: ${pluginPrefix}
+libraries:
+  - com.j256.ormlite:ormlite-jdbc:6.1
