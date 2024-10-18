@@ -3,17 +3,17 @@ package com.zp4rker.iab.db;
 import com.j256.ormlite.field.FieldType;
 import com.j256.ormlite.field.SqlType;
 import com.j256.ormlite.field.types.StringType;
-import com.zp4rker.iab.api.Loc;
+import com.zp4rker.iab.api.Coord;
 
-public class LocPersister extends StringType {
-    public LocPersister() {
-        super(SqlType.STRING, new Class[]{Loc.class});
+public class CoordPersister extends StringType {
+    public CoordPersister() {
+        super(SqlType.STRING, new Class[]{Coord.class});
     }
 
     @Override
     public Object javaToSqlArg(FieldType fieldType, Object javaObject) {
-        Loc loc = (Loc) javaObject;
-        return loc.getX() + "," + loc.getY() + "," + loc.getZ();
+        Coord coord = (Coord) javaObject;
+        return coord.getX() + "," + coord.getY() + "," + coord.getZ();
     }
 
     @Override
@@ -25,12 +25,12 @@ public class LocPersister extends StringType {
         int x = Integer.parseInt(parts[0]);
         int y = Integer.parseInt(parts[1]);
         int z = Integer.parseInt(parts[2]);
-        return new Loc(x, y, z);
+        return new Coord(x, y, z);
     }
 
-    private static final LocPersister singleton = new LocPersister();
+    private static final CoordPersister singleton = new CoordPersister();
 
-    public static LocPersister getSingleton() {
+    public static CoordPersister getSingleton() {
         return singleton;
     }
 }

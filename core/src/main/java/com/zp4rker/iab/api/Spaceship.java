@@ -5,9 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import com.zp4rker.iab.IABCore;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @DatabaseTable(tableName = "spaceships")
 public class Spaceship {
@@ -22,7 +20,7 @@ public class Spaceship {
     @DatabaseField(foreign = true)
     private Planet planet;
     @DatabaseField
-    private Loc location;
+    private Coord location;
 
     @DatabaseField
     private int health = 100;
@@ -47,7 +45,7 @@ public class Spaceship {
         this.name = name;
         this.inauguration = inauguration;
         this.planet = location.getPlanet();
-        this.location = location.getLoc();
+        this.location = location.getCoord();
         this.captain = captain;
         this.health = health;
         this.maxHealth = maxHealth;
@@ -63,7 +61,7 @@ public class Spaceship {
         this.name = name;
         this.captain = captain;
         this.planet = location.getPlanet();
-        this.location = location.getLoc();
+        this.location = location.getCoord();
     }
 
     public Spaceship() {
@@ -87,7 +85,7 @@ public class Spaceship {
 
     public void setLocation(PlanetaryLocation location) {
         this.planet = location.getPlanet();
-        this.location = location.getLoc();
+        this.location = location.getCoord();
     }
 
     public Explorer getCaptain() {

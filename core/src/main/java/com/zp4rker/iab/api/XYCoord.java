@@ -1,12 +1,11 @@
 package com.zp4rker.iab.api;
 
-public class Loc {
-    private final int x, y, z;
+public class XYCoord {
+    private final int x, y;
 
-    public Loc(int x, int y, int z) {
+    public XYCoord(int x, int y) {
         this.x = x;
         this.y = y;
-        this.z = z;
     }
 
     public int getX() {
@@ -15,9 +14,5 @@ public class Loc {
 
     public int getY() {
         return y;
-    }
-
-    public int getZ() {
-        return z;
     }
 }

@@ -39,7 +39,7 @@ public class PlanetaryLocation {
         this.z = z;
     }
 
-    public Loc getLoc() {
-        return new Loc(x, y, z);
+    public Coord getCoord() {
+        return new Coord(x, y, z);
     }
 }
