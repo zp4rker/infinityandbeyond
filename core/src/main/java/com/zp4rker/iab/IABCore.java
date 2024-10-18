@@ -29,6 +29,8 @@ public class IABCore extends JavaPlugin {
 
         connectDatabase();
         createTables();
+
+        testDatabase();
     }
 
     @Override

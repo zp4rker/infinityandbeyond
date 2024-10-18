@@ -23,8 +23,6 @@ public class DBManager {
     public DBManager(String connectionStr) throws SQLException {
         cs = new JdbcConnectionSource(connectionStr);
 
-        DataPersisterManager.registerDataPersisters(LocPersister.getSingleton());
-
         planetDao = DaoManager.createDao(cs, Planet.class);
         explorerDao = DaoManager.createDao(cs, Explorer.class);
         spaceshipDao = DaoManager.createDao(cs, Spaceship.class);
