@@ -3,7 +3,7 @@ package com.zp4rker.iab.api;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.zp4rker.iab.IABCore;
-import com.zp4rker.iab.db.CoordPersister;
+import com.zp4rker.iab.db.XYCoordPersister;
 
 import java.sql.SQLException;
 
@@ -11,15 +11,15 @@ import java.sql.SQLException;
 public class Planet {
     @DatabaseField(id = true)
     private String name;
-    @DatabaseField(persisterClass = CoordPersister.class)
-    private Coord location;
+    @DatabaseField(persisterClass = XYCoordPersister.class)
+    private XYCoord location;
 
     @DatabaseField
     private int width;
     @DatabaseField
     private int height;
 
-    public Planet(String name, Coord location, int width, int height) {
+    public Planet(String name, XYCoord location, int width, int height) {
         this.name = name;
         this.location = location;
         this.width = width;
@@ -33,7 +33,7 @@ public class Planet {
         return name;
     }
 
-    public Coord getLocation() {
+    public XYCoord getLocation() {
         return location;
     }
 
