@@ -1,14 +1,19 @@
 package com.zp4rker.iab;
 
 import com.zp4rker.iab.db.DBManager;
+import com.zp4rker.iab.listeners.PlayerJoinListener;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.filter.AbstractFilter;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 public class IABCore extends JavaPlugin {
     public static IABCore INST;
@@ -24,7 +29,7 @@ public class IABCore extends JavaPlugin {
         registerCommands();
         registerListeners();
 
-        connectDatabase();
+        configDatabase();
         shushOrmliteLogger();
         createTables();
     }
@@ -41,18 +46,33 @@ public class IABCore extends JavaPlugin {
     }
 
     private void registerListeners() {
-        // Arrays.asList().forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+         Arrays.asList(new PlayerJoinListener()).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
     public static DBManager DB_MANAGER = null;
 
-    private void connectDatabase() {
-        String connectionStr = getConfig().getString("database.connectionString");
+    private void configDatabase() {
         try {
+            String connectionStr = getConfig().getString("database.connectionString", null);
+            if (connectionStr == null) {
+                String dbType = getConfig().getString("database.type", "mysql");
+                String host = getConfig().getString("database.host", null);
+                String user = getConfig().getString("database.user", null);
+                String password = getConfig().getString("database.password", null);
+                String dbname = getConfig().getString("database.dbname", "infinityandbeyond");
+                if (host == null || (dbType.equalsIgnoreCase("mysql") && Stream.of(user, password).anyMatch(Objects::isNull))) {
+                    LOGGER.warning("Invalid/incomplete database configuration found! Falling back to file database");
+                    String file = getDataFolder().getAbsolutePath() + File.pathSeparator + "plugindata.db";
+                    connectionStr = "jdbc:sqlite:" + file;
+                } else {
+                    connectionStr = DBManager.connectionString(dbType, host, user, password, dbname);
+                }
+            }
             DB_MANAGER = new DBManager(connectionStr);
-            LOGGER.info("Connected and setup database");
+            LOGGER.info("Completed database configuration");
         } catch (SQLException e) {
-            LOGGER.severe("Unable to connect to or setup database! Shutting down...");
+            LOGGER.severe("Unable to configure database: " + e.getMessage());
+            LOGGER.info("Disabling plugin");
             getServer().getPluginManager().disablePlugin(this);
         }
     }
@@ -62,7 +82,8 @@ public class IABCore extends JavaPlugin {
             DB_MANAGER.createTables();
             LOGGER.info("Created tables");
         } catch (SQLException e) {
-            LOGGER.severe("Unable to create tables! Shutting down...");
+            LOGGER.severe("Unable to create tables: \n" + e.getMessage());
+            LOGGER.info("Disabling plugin");
             getServer().getPluginManager().disablePlugin(this);
         }
     }

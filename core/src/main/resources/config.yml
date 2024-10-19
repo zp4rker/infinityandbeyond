@@ -1,2 +1,9 @@
 database:
-  connectionString: mongodb://localhost
+  # Types available: mysql, sqlite
+  type: mysql
+  # If using sqlite, host refers to the file name
+  host: localhost
+  # Following options only used for mysql
+  user: admin
+  password: infinityandbeyond
+  dbname: infinityandbeyond

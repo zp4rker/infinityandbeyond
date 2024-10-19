@@ -117,6 +117,10 @@ public class Explorer {
         return find(uuid) != null;
     }
 
+    public static Explorer find(Player player) {
+        return find(player.getUniqueId());
+    }
+
     public static Explorer find(UUID uuid) {
         try {
             return IABCore.DB_MANAGER.findExplorer(uuid);

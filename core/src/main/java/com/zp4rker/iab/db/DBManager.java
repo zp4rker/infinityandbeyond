@@ -11,6 +11,7 @@ import com.zp4rker.iab.api.Planet;
 import com.zp4rker.iab.api.Spaceship;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.UUID;
 
 public class DBManager {
@@ -19,6 +20,19 @@ public class DBManager {
     private final Dao<Planet, String> planetDao;
     private final Dao<Explorer, UUID> explorerDao;
     private final Dao<Spaceship, String> spaceshipDao;
+
+    public static String connectionString(String dbType, String host, String user, String password, String dbName) throws IllegalArgumentException, SQLException {
+        dbType = dbType.toLowerCase();
+        if (!Arrays.asList("mysql", "sqlite").contains(dbType)) {
+            throw new IllegalArgumentException("Unknown database type: " + dbType);
+        }
+
+        if (dbType.equals("mysql")) {
+            return String.format("jdbc:mysql://%s/%s?user=%s&password=%s", host, dbName, user, password);
+        } else {
+            return String.format("jdbc:sqlite:%s", host);
+        }
+    }
 
     public DBManager(String connectionStr) throws SQLException {
         cs = new JdbcConnectionSource(connectionStr);
