@@ -1,10 +1,22 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "2.0.21"
+}
+
 version = "0.0.1-alpha"
 
 apply from: "${rootDir}/build-logic/common.gradle"
 
 dependencies {
+    compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21")
+
     compileOnly("com.j256.ormlite:ormlite-jdbc:6.1")
 
     compileOnly("org.apache.logging.log4j:log4j-core:2.22.1") // To change ormlite logger level, already bundled with Bukkit
     compileOnly("org.jetbrains:annotations-java5:24.1.0")
+}
+
+kotlin.compilerOptions {
+    jvmTarget = JvmTarget.JVM_1_8
 }

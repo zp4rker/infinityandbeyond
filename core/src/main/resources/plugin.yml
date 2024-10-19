@@ -5,4 +5,5 @@ description: ${description}
 api-version: ${apiVersion}
 prefix: ${pluginPrefix}
 libraries:
+  - org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21
   - com.j256.ormlite:ormlite-jdbc:6.1
