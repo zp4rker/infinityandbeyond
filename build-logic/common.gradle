@@ -1,5 +1,3 @@
-apply plugin: "java"
-
 def pluginName = "InfinityAndBeyond-${project.name.capitalize()}"
 def pluginPrefix = "IAB-${project.name.capitalize()}"
 def apiVersion = rootProject.property("apiVersion")
