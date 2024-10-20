@@ -4,8 +4,8 @@ plugins {
 
 group = "com.zp4rker"
 description = "The revolutionary space-exploration plugin."
-def apiVersion = "1.21.1"
-project.ext.apiVersion = apiVersion
+def mcVersion = "1.21.1"
+project.ext.mcVersion = mcVersion
 
 evaluationDependsOnChildren()
 
@@ -20,5 +20,5 @@ subprojects.forEach { p ->
 
 runServer {
     dependsOn subprojects.build
-    minecraftVersion(apiVersion)
+    minecraftVersion(mcVersion)
 }

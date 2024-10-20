@@ -1,0 +1,5 @@
+explorer-setup:
+  prompt: <gold>Please enter your explorer name</gold>
+  error: Explorer names have to be 35 characters or less
+  success: <gold>Your explorer name has been set to</gold> <green><bold>%name%</bold></green>
+  fail: <red>Failed to set your explorer name! Please try again</red>

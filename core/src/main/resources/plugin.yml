@@ -2,7 +2,7 @@ name: ${pluginName}
 main: com.zp4rker.iab.IABCore
 version: ${version}
 description: ${description}
-api-version: ${apiVersion}
+api-version: ${mcVersion}
 prefix: ${pluginPrefix}
 libraries:
   - org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21
