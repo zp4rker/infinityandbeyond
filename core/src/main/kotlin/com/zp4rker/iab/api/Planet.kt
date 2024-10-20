@@ -24,7 +24,7 @@ class Planet {
         try {
             DB_MANAGER?.savePlanet(this) ?: throw SQLException("Database manager not setup!")
             return true
-        } catch (e: SQLException) {
+        } catch (_: SQLException) {
             return false
         }
     }
@@ -33,7 +33,7 @@ class Planet {
         try {
             DB_MANAGER?.deletePlanet(this) ?: throw SQLException("Database manager not setup!")
             return true
-        } catch (e: SQLException) {
+        } catch (_: SQLException) {
             return false
         }
     }
@@ -44,7 +44,7 @@ class Planet {
         fun find(name: String): Planet? {
             return try {
                 DB_MANAGER?.findPlanet(name) ?: throw SQLException("Database manager not setup!")
-            } catch (e: SQLException) {
+            } catch (_: SQLException) {
                 null
             }
         }
