@@ -45,7 +45,7 @@ class IABCore : JavaPlugin() {
     private fun configDatabase() {
         var connectionUrl = config.getString("database.connectionUrl", null)
         if (connectionUrl.isNullOrBlank()) {
-            val dbType = config.getString("datbase.type", "mysql")
+            val dbType = config.getString("database.type", "mysql")
             val host = config.getString("database.host", null)
             val user = config.getString("database.user", null)
             val password = config.getString("database.password", null)
