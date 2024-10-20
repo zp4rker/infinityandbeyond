@@ -5,21 +5,25 @@ import com.j256.ormlite.table.DatabaseTable
 import com.zp4rker.iab.DB_MANAGER
 import org.bukkit.entity.Player
 import java.sql.SQLException
-import java.util.UUID
+import java.util.*
 
 @DatabaseTable(tableName = "explorers")
 class Explorer() {
     @DatabaseField(id = true)
     var uuid: UUID = UUID.randomUUID()
+
     @DatabaseField(unique = true)
     var name: String = ""
+
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     var spaceship: Spaceship = Spaceship()
 
     @DatabaseField
     var tripCount: Int = 0
+
     @DatabaseField
     var flightTime: Float = 0f
+
     @DatabaseField
     var distanceTravelled: Float = 0f
 
