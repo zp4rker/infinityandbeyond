@@ -32,6 +32,10 @@ class IABCore : JavaPlugin() {
         createTables()
     }
 
+    override fun onDisable() {
+        DB_MANAGER?.closeConnection()
+    }
+
     private fun registerCommands() {}
 
     private fun registerListeners() {
@@ -52,7 +56,7 @@ class IABCore : JavaPlugin() {
                 val file = File(dataFolder, "plugindata.db").absolutePath
                 connectionUrl = "jdbc:sqlite:$file"
             } else {
-                connectionUrl = DBManager.connectionString(dbType, host, user, password, dbname)
+                connectionUrl = DBManager.connectionUrl(dbType!!, host, user, password, dbname!!)
             }
         }
         DB_MANAGER = DBManager(connectionUrl)
