@@ -1,9 +1,11 @@
-name: ${pluginName}
 main: com.zp4rker.iab.IABCore
+api-version: ${mcVersion}
+libraries:
+  - com.j256.ormlite:ormlite-jdbc:6.1
+depend:
+  - Bukkot
+
+name: ${pluginName}
+prefix: ${pluginPrefix}
 version: ${version}
 description: ${description}
-api-version: ${mcVersion}
-prefix: ${pluginPrefix}
-libraries:
-  - org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21
-  - com.j256.ormlite:ormlite-jdbc:6.1

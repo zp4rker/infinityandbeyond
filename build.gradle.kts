@@ -21,7 +21,7 @@ subprojects {
 
     dependencies {
         compileOnly("io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT")
-        compileOnly("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+        compileOnly("com.zp4rker:bukkot:2.0.0-k2.0.21")
     }
 
     tasks.jar {
@@ -55,6 +55,9 @@ subprojects.forEach {
 tasks.runServer {
     dependsOn(subprojects.map { it.tasks.build })
     minecraftVersion(mcVersion)
+    downloadPlugins {
+        github("zp4rker", "bukkot", "v2.0.0-k2.0.21", "bukkot-2.0.0-k2.0.21.jar")
+    }
 }
 
 gradle.startParameter.excludedTaskNames += ":build"
