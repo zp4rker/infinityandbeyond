@@ -1,9 +1,10 @@
 package com.zp4rker.iab.listeners
 
+import com.zp4rker.bukkot.extensions.runTask
 import com.zp4rker.iab.LOGGER
 import com.zp4rker.iab.PLUGIN
 import com.zp4rker.iab.api.Explorer
-import com.zp4rker.iab.prompts.ExplorerSetupPrompt
+import com.zp4rker.iab.prompts.ExplorerInitPrompt
 import com.zp4rker.iab.utils.MM
 import org.bukkit.conversations.ConversationFactory
 import org.bukkit.entity.Player
@@ -17,21 +18,6 @@ class PlayerJoinListener : Listener {
         if (Explorer.find(event.player) != null) return
 
         event.joinMessage(null)
-        val prompt = ExplorerSetupPrompt()
-        ConversationFactory(PLUGIN)
-            .withFirstPrompt(prompt)
-            .addConversationAbandonedListener { e ->
-                prompt.explorer?.let {
-                    LOGGER.info("Explorer profile setup successfully")
-                    (e.context.forWhom as Player).run {
-                        val component = MM.deserialize(it.name)
-                        customName(component)
-                        displayName(component)
-                        playerListName(component)
-                    }
-                } ?: run {
-                    LOGGER.info("Explorer profile not setup?")
-                }
-            }.buildConversation(event.player).begin()
+        PLUGIN.runTask(async = true) { ExplorerInitPrompt(event.player).run() }
     }
 }
