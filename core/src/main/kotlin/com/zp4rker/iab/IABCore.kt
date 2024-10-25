@@ -1,7 +1,7 @@
 package com.zp4rker.iab
 
 import com.zp4rker.iab.db.DBManager
-import com.zp4rker.iab.listeners.PlayerJoinListener
+import com.zp4rker.iab.prompts.ExplorerSetup
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.Filter
@@ -19,7 +19,7 @@ var DB_MANAGER: DBManager? = null
 class IABCore : JavaPlugin() {
 
     override fun onEnable() {
-        PLUGIN = this;
+        PLUGIN = this
         LOGGER = logger
 
         saveDefaultConfig()
@@ -39,7 +39,8 @@ class IABCore : JavaPlugin() {
     private fun registerCommands() {}
 
     private fun registerListeners() {
-        arrayOf(PlayerJoinListener()).forEach { server.pluginManager.registerEvents(it, this) }
+        ExplorerSetup.startListening()
+        // arrayOf().forEach { it.register(this) }
     }
 
     private fun configDatabase() {
