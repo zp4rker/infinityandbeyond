@@ -21,7 +21,7 @@ subprojects {
 
     dependencies {
         compileOnly("io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT")
-        compileOnly("com.zp4rker:bukkot:2.0.0-k2.0.21")
+        compileOnly("com.zp4rker:bukkot:2.1.0-k2.0.21")
     }
 
     tasks.jar {

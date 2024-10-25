@@ -12,6 +12,8 @@ import org.bukkit.entity.Player
 class ExplorerInitPrompt(private val player: Player) {
     fun run() {
         player.sendMessage(Lang.getMessage("explorer-setup.prompt"))
+
+        var name: String? = null
         player.expect<AsyncChatEvent>(PLUGIN, predicate = {
             it.isCancelled = true
             if (it.message().plain().length > 35) {
@@ -21,14 +23,16 @@ class ExplorerInitPrompt(private val player: Player) {
                 true
             }
         }) {
-            val name =  it.message().plain()
-            val explorer = Explorer(player, name)
-            if (explorer.save()) {
-                val tr = TextReplacementConfig.builder().match("%name%").replacement(explorer.name).build()
-                player.sendMessage(Lang.getMessage("explorer-setup.success").replaceText(tr))
-            } else {
-                player.sendMessage(Lang.getMessage("explorer-setup.fail"))
-            }
+            name =  it.message().plain()
+        }
+
+        if (name == null) return
+        val explorer = Explorer(player, name!!)
+        if (explorer.save()) {
+            val tr = TextReplacementConfig.builder().match("%name%").replacement(explorer.name).build()
+            player.sendMessage(Lang.getMessage("explorer-setup.success").replaceText(tr))
+        } else {
+            player.sendMessage(Lang.getMessage("explorer-setup.fail"))
         }
     }
 }
