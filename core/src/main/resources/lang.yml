@@ -1,5 +1,11 @@
 explorer-setup:
-  prompt: <gold>Please enter your explorer name</gold>
-  error: <red>Explorer names must be 35 characters or less</red>
+  prompt:
+    first: <gold>Please enter your explorer's <u>first</u> name</gold>
+    last: <gold>Please enter your explorer's <u>last</u> name</gold>
+  error:
+    toolong: <red>Name must be 15 characters or less</red>
+    tooshort: <red>Name must be at least 2 characters long</red>
+    invalid: <red>Numbers and symbols are not allowed in names</red>
+    bad: <red>An illegal word was found in your name</red>
   success: <gold>Your explorer name has been set to</gold> <green><bold>%name%</bold></green>
   fail: <red>Failed to set your explorer name! Please try again</red>

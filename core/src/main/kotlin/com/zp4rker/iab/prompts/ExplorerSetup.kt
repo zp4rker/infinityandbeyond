@@ -1,8 +1,11 @@
 package com.zp4rker.iab.prompts
 
+import com.zp4rker.bukkot.api.BlockingFunction
 import com.zp4rker.bukkot.extensions.plain
 import com.zp4rker.bukkot.extensions.runTask
+import com.zp4rker.bukkot.listener.Predicate
 import com.zp4rker.bukkot.listener.expect
+import com.zp4rker.bukkot.listener.expectBlocking
 import com.zp4rker.bukkot.listener.on
 import com.zp4rker.iab.PLUGIN
 import com.zp4rker.iab.api.Explorer
@@ -13,24 +16,47 @@ import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerJoinEvent
 
 class ExplorerSetup(private val player: Player) {
+    @BlockingFunction
     fun run() {
-        player.sendMessage(Lang.getMessage("explorer-setup.prompt"))
+        var name = ""
 
-        var name: String? = null
-        player.expect<AsyncChatEvent>(PLUGIN, predicate = {
+        val predicate: Predicate<AsyncChatEvent> = {
+            var accept = true
+
             it.isCancelled = true
-            if (it.message().plain().length > 35) {
-                player.sendMessage(Lang.getMessage("explorer-setup.error"))
-                false
-            } else {
-                true
+            val input = it.message().plain()
+
+            if (input.length > 15) {
+                player.sendMessage(Lang.getMessage("explorer-setup.error.toolong"))
+                accept = false
             }
-        }) {
-            name = it.message().plain()
+
+            if (input.length < 2) {
+                player.sendMessage(Lang.getMessage("explorer-setup.error.tooshort"))
+                accept = false
+            }
+
+            if (input.any { c -> !c.isLetter() || !c.isWhitespace() }) {
+                player.sendMessage(Lang.getMessage("explorer-setup.error.invalid"))
+                accept = false
+            }
+
+            // todo: check for illegal words
+
+            accept
         }
 
-        if (name == null) return
-        val explorer = Explorer(player, name!!)
+        player.sendMessage(Lang.getMessage("explorer-setup.prompt.first"))
+        player.expectBlocking<AsyncChatEvent>(PLUGIN, predicate = predicate) {
+            name = it.message().plain().replaceFirstChar { c -> c.uppercase() }
+        }
+
+        player.sendMessage(Lang.getMessage("explorer-setup.prompt.last"))
+        player.expectBlocking<AsyncChatEvent>(PLUGIN, predicate = predicate) {
+            name += " " + it.message().plain().replaceFirstChar { c -> c.uppercase() }
+        }
+
+        val explorer = Explorer(player, name)
         if (explorer.save()) {
             val tr = TextReplacementConfig.builder().match("%name%").replacement(explorer.name).build()
             player.sendMessage(Lang.getMessage("explorer-setup.success").replaceText(tr))
@@ -40,6 +66,7 @@ class ExplorerSetup(private val player: Player) {
     }
 
     companion object {
+        @OptIn(BlockingFunction::class)
         fun startListening() {
             PLUGIN.on<PlayerJoinEvent>(predicate = { Explorer.find(it.player) == null }) {
                 it.joinMessage(null)
