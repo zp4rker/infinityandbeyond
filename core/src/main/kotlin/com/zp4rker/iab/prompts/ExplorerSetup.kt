@@ -1,6 +1,7 @@
 package com.zp4rker.iab.prompts
 
 import com.zp4rker.bukkot.api.BlockingFunction
+import com.zp4rker.bukkot.extensions.minimessage
 import com.zp4rker.bukkot.extensions.plain
 import com.zp4rker.bukkot.extensions.runTask
 import com.zp4rker.bukkot.listener.Predicate
@@ -36,7 +37,7 @@ class ExplorerSetup(private val player: Player) {
                 accept = false
             }
 
-            if (input.any { c -> !c.isLetter() || !c.isWhitespace() }) {
+            if (input.any { c -> !c.isLetter() && !c.isWhitespace() }) {
                 player.sendMessage(Lang.getMessage("explorer-setup.error.invalid"))
                 accept = false
             }
@@ -48,12 +49,16 @@ class ExplorerSetup(private val player: Player) {
 
         player.sendMessage(Lang.getMessage("explorer-setup.prompt.first"))
         player.expectBlocking<AsyncChatEvent>(PLUGIN, predicate = predicate) {
-            name = it.message().plain().replaceFirstChar { c -> c.uppercase() }
+            val input = it.message().plain().replaceFirstChar { c -> c.uppercase() }.trim()
+            player.sendMessage("<gray><i>$input</i></gray>".minimessage())
+            name = input
         }
 
         player.sendMessage(Lang.getMessage("explorer-setup.prompt.last"))
         player.expectBlocking<AsyncChatEvent>(PLUGIN, predicate = predicate) {
-            name += " " + it.message().plain().replaceFirstChar { c -> c.uppercase() }
+            val input = it.message().plain().replaceFirstChar { c -> c.uppercase() }.trim()
+            player.sendMessage("<gray><i>$input</i></gray>".minimessage())
+            name += " $input"
         }
 
         val explorer = Explorer(player, name)
@@ -69,7 +74,6 @@ class ExplorerSetup(private val player: Player) {
         @OptIn(BlockingFunction::class)
         fun startListening() {
             PLUGIN.on<PlayerJoinEvent>(predicate = { Explorer.find(it.player) == null }) {
-                it.joinMessage(null)
                 PLUGIN.runTask(async = true) { ExplorerSetup(it.player).run() }
             }
         }
