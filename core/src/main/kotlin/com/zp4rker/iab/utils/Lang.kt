@@ -1,13 +1,13 @@
 package com.zp4rker.iab.utils
 
-import net.kyori.adventure.text.minimessage.MiniMessage
-
-val MM = MiniMessage.miniMessage()
+import com.zp4rker.bukkot.extensions.minimessage
+import com.zp4rker.bukkot.yaml.YamlFile
+import com.zp4rker.iab.PLUGIN
 
 object Lang {
-    private val langFile = YamlFile("lang.yml")
+    private val langFile = YamlFile(PLUGIN, "lang.yml")
 
-    fun getMessage(yamlPath: String) = MM.deserialize(
-        langFile.yaml.getString(yamlPath, "Message not set in lang.yml")!!
-    )
+    fun getMessage(yamlPath: String) = langFile.getString(yamlPath, "Message not set in lang.yml")!!.minimessage()
+
+    fun getMessages(yamlPath: String) = langFile.getStringList(yamlPath).map { it.minimessage() }
 }
