@@ -6,7 +6,7 @@ import com.j256.ormlite.field.DataPersisterManager
 import com.j256.ormlite.jdbc.JdbcConnectionSource
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
-import com.zp4rker.iab.PLUGIN
+import com.zp4rker.iab.IAB
 import com.zp4rker.iab.api.Explorer
 import com.zp4rker.iab.api.Planet
 import com.zp4rker.iab.api.Spaceship
@@ -59,7 +59,7 @@ class DBManager(connectionUrl: String) {
             return if (dbType.equals("mysql", true)) {
                 "jdbc:mysql://$host/$dbname?user=$user&password=$password"
             } else {
-                "jdbc:sqlite:${File(PLUGIN.dataFolder, host).absolutePath}"
+                "jdbc:sqlite:${File(IAB.dataFolder, host).absolutePath}"
             }
         }
     }

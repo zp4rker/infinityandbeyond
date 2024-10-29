@@ -6,8 +6,7 @@ import com.zp4rker.bukkot.extensions.plain
 import com.zp4rker.bukkot.extensions.runTask
 import com.zp4rker.bukkot.listener.Predicate
 import com.zp4rker.bukkot.listener.expectBlocking
-import com.zp4rker.iab.LOGGER
-import com.zp4rker.iab.PLUGIN
+import com.zp4rker.iab.IAB
 import com.zp4rker.iab.api.Explorer
 import com.zp4rker.iab.utils.Lang
 import io.papermc.paper.event.player.AsyncChatEvent
@@ -48,14 +47,14 @@ class ExplorerSetup(private val player: Player) {
         }
 
         player.sendMessage(Lang.getMessage("explorer-setup.prompt.first"))
-        player.expectBlocking<AsyncChatEvent>(PLUGIN, predicate = predicate) {
+        player.expectBlocking<AsyncChatEvent>(IAB, predicate = predicate) {
             val input = it.message().plain().replaceFirstChar { c -> c.uppercase() }.trim()
             player.sendMessage("<gray><i>$input</i></gray>".minimessage())
             name = input
         }
 
         player.sendMessage(Lang.getMessage("explorer-setup.prompt.last"))
-        player.expectBlocking<AsyncChatEvent>(PLUGIN, predicate = predicate) {
+        player.expectBlocking<AsyncChatEvent>(IAB, predicate = predicate) {
             val input = it.message().plain().replaceFirstChar { c -> c.uppercase() }.trim()
             player.sendMessage("<gray><i>$input</i></gray>".minimessage())
             name += " $input"
@@ -74,11 +73,9 @@ class ExplorerSetup(private val player: Player) {
         val Listener = object : Listener {
             @EventHandler
             fun onJoin(event: PlayerJoinEvent) {
-                LOGGER.info("this listener is being called")
-
                 if (Explorer.find(event.player) != null) return
 
-                PLUGIN.runTask(async = true) { ExplorerSetup(event.player).run() }
+                IAB.runTask(async = true) { ExplorerSetup(event.player).run() }
             }
         }
     }

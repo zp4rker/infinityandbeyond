@@ -14,15 +14,12 @@ import java.io.File
 import java.sql.SQLException
 import java.util.logging.Logger
 
-lateinit var PLUGIN: IABCore
-lateinit var LOGGER: Logger
+lateinit var IAB: InfinityAndBeyond
 var DB_MANAGER: DBManager? = null
 
-class IABCore : JavaPlugin() {
-
+class InfinityAndBeyond : JavaPlugin() {
     override fun onEnable() {
-        PLUGIN = this
-        LOGGER = logger
+        IAB = this
 
         saveDefaultConfig()
 

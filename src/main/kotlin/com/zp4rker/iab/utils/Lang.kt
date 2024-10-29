@@ -2,11 +2,11 @@ package com.zp4rker.iab.utils
 
 import com.zp4rker.bukkot.extensions.minimessage
 import com.zp4rker.bukkot.yaml.YamlFile
-import com.zp4rker.iab.PLUGIN
+import com.zp4rker.iab.IAB
 import net.kyori.adventure.text.Component
 
 object Lang {
-    private val langFile = YamlFile(PLUGIN, "lang.yml")
+    private val langFile = YamlFile(IAB, "lang.yml")
 
     fun getMessage(yamlPath: String, replacements: Map<String, String> = emptyMap()): Component {
         return langFile.getString(yamlPath, "Message not set in lang.yml")!!.replaceText(replacements).minimessage()

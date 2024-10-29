@@ -1,4 +1,4 @@
-main: com.zp4rker.iab.IABCore
+main: com.zp4rker.iab.InfinityAndBeyond
 api-version: ${mcVersion}
 libraries:
   - com.j256.ormlite:ormlite-jdbc:6.1
