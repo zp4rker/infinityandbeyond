@@ -11,7 +11,7 @@ explorer-setup:
   fail: <red>Failed to set your explorer name! Please try again
 
 welcome-message:
-  newplayer: # todo: add uninitialised player welcome message
+  newplayer: Welcome! # todo: add uninitialised player welcome message
   regular:
     - <gold>Welcome back, <green>%name%
     - <gold>You are currently on planet <blue>%planet%

@@ -5,14 +5,12 @@ import com.zp4rker.bukkot.extensions.minimessage
 import com.zp4rker.bukkot.extensions.plain
 import com.zp4rker.bukkot.extensions.runTask
 import com.zp4rker.bukkot.listener.Predicate
-import com.zp4rker.bukkot.listener.expect
 import com.zp4rker.bukkot.listener.expectBlocking
 import com.zp4rker.bukkot.listener.on
 import com.zp4rker.iab.PLUGIN
 import com.zp4rker.iab.api.Explorer
 import com.zp4rker.iab.utils.Lang
 import io.papermc.paper.event.player.AsyncChatEvent
-import net.kyori.adventure.text.TextReplacementConfig
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerJoinEvent
 
@@ -63,8 +61,7 @@ class ExplorerSetup(private val player: Player) {
 
         val explorer = Explorer(player, name)
         if (explorer.save()) {
-            val tr = TextReplacementConfig.builder().match("%name%").replacement(explorer.name).build()
-            player.sendMessage(Lang.getMessage("explorer-setup.success").replaceText(tr))
+            player.sendMessage(Lang.getMessage("explorer-setup.success", mapOf("%name%" to explorer.name)))
         } else {
             player.sendMessage(Lang.getMessage("explorer-setup.fail"))
         }
