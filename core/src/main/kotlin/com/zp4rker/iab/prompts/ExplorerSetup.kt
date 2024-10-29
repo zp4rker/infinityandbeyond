@@ -6,13 +6,14 @@ import com.zp4rker.bukkot.extensions.plain
 import com.zp4rker.bukkot.extensions.runTask
 import com.zp4rker.bukkot.listener.Predicate
 import com.zp4rker.bukkot.listener.expectBlocking
-import com.zp4rker.bukkot.listener.listener
-import com.zp4rker.bukkot.listener.on
+import com.zp4rker.iab.LOGGER
 import com.zp4rker.iab.PLUGIN
 import com.zp4rker.iab.api.Explorer
 import com.zp4rker.iab.utils.Lang
 import io.papermc.paper.event.player.AsyncChatEvent
 import org.bukkit.entity.Player
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 
 class ExplorerSetup(private val player: Player) {
@@ -70,10 +71,15 @@ class ExplorerSetup(private val player: Player) {
 
     companion object {
         @OptIn(BlockingFunction::class)
-        val Listener = listener<PlayerJoinEvent> {
-            if (Explorer.find(it.player) != null) return@listener
+        val Listener = object : Listener {
+            @EventHandler
+            fun onJoin(event: PlayerJoinEvent) {
+                LOGGER.info("this listener is being called")
 
-            PLUGIN.runTask(async = true) { ExplorerSetup(it.player).run() }
+                if (Explorer.find(event.player) != null) return
+
+                PLUGIN.runTask(async = true) { ExplorerSetup(event.player).run() }
+            }
         }
     }
 }
