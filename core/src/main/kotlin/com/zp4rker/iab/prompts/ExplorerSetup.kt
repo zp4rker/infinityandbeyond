@@ -6,6 +6,7 @@ import com.zp4rker.bukkot.extensions.plain
 import com.zp4rker.bukkot.extensions.runTask
 import com.zp4rker.bukkot.listener.Predicate
 import com.zp4rker.bukkot.listener.expectBlocking
+import com.zp4rker.bukkot.listener.listener
 import com.zp4rker.bukkot.listener.on
 import com.zp4rker.iab.PLUGIN
 import com.zp4rker.iab.api.Explorer
@@ -69,10 +70,10 @@ class ExplorerSetup(private val player: Player) {
 
     companion object {
         @OptIn(BlockingFunction::class)
-        fun startListening() {
-            PLUGIN.on<PlayerJoinEvent>(predicate = { Explorer.find(it.player) == null }) {
-                PLUGIN.runTask(async = true) { ExplorerSetup(it.player).run() }
-            }
+        val Listener = listener<PlayerJoinEvent> {
+            if (Explorer.find(it.player) != null) return@listener
+
+            PLUGIN.runTask(async = true) { ExplorerSetup(it.player).run() }
         }
     }
 }

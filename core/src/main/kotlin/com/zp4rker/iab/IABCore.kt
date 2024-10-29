@@ -1,6 +1,8 @@
 package com.zp4rker.iab
 
+import com.zp4rker.bukkot.extensions.register
 import com.zp4rker.iab.db.DBManager
+import com.zp4rker.iab.listeners.WelcomeMessage
 import com.zp4rker.iab.prompts.ExplorerSetup
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
@@ -39,8 +41,10 @@ class IABCore : JavaPlugin() {
     private fun registerCommands() {}
 
     private fun registerListeners() {
-        ExplorerSetup.startListening()
-        // arrayOf().forEach { it.register(this) }
+        arrayOf(
+            ExplorerSetup.Listener,
+            WelcomeMessage
+        ).forEach { it.register(this) }
     }
 
     private fun configDatabase() {
