@@ -12,7 +12,6 @@ import org.apache.logging.log4j.core.filter.AbstractFilter
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 import java.sql.SQLException
-import java.util.logging.Logger
 
 lateinit var IAB: InfinityAndBeyond
 var DB_MANAGER: DBManager? = null
