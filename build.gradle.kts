@@ -3,6 +3,8 @@ import java.util.*
 plugins {
     kotlin("jvm") version "2.0.21"
 
+    id("com.gradleup.shadow") version "8.3.3"
+
     id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
@@ -15,16 +17,31 @@ project.ext["mcVersion"] = mcVersion
 repositories {
     mavenCentral()
     maven("https://papermc.io/repo/repository/maven-public/")
+    maven("https://repo.aikar.co/content/groups/aikar/")
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT")
     compileOnly("com.zp4rker:bukkot:2.1.0-k2.0.21")
 
+    implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
+
     compileOnly("com.j256.ormlite:ormlite-jdbc:6.1")
     compileOnly("org.apache.logging.log4j:log4j-core:2.22.1") // To change ormlite logger level
 
     compileOnly("org.jetbrains:annotations:24.1.0")
+}
+
+tasks {
+    jar {
+        archiveClassifier.set("original")
+    }
+
+    shadowJar {
+        archiveClassifier.set("")
+        relocate("co.aikar.acf", "com.zp4rker.infinityandbeyond.acf")
+        relocate("co.aikar.locales", "com.zp4rker.infinityandbeyond.locales")
+    }
 }
 
 tasks.processResources {
