@@ -2,6 +2,7 @@ package com.zp4rker.iab
 
 import co.aikar.commands.PaperCommandManager
 import com.zp4rker.bukkot.extensions.register
+import com.zp4rker.iab.commands.Debug
 import com.zp4rker.iab.db.DBManager
 import com.zp4rker.iab.listeners.WelcomeMessage
 import com.zp4rker.iab.prompts.ExplorerSetup
@@ -13,7 +14,6 @@ import org.apache.logging.log4j.core.filter.AbstractFilter
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 import java.sql.SQLException
-import kotlin.concurrent.thread
 
 lateinit var IAB: InfinityAndBeyond
 var DB_MANAGER: DBManager? = null
@@ -38,6 +38,9 @@ class InfinityAndBeyond : JavaPlugin() {
 
     private fun registerCommands() {
         val manager = PaperCommandManager(this)
+        listOf(
+            Debug
+        ).forEach { manager.registerCommand(it) }
     }
 
     private fun registerListeners() {
