@@ -1,5 +1,3 @@
-import java.util.*
-
 plugins {
     kotlin("jvm") version "2.0.21"
 
@@ -22,7 +20,7 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT")
-    compileOnly("com.zp4rker:bukkot:2.1.0-k2.0.21")
+    compileOnly("com.zp4rker:bukkot:2.1.1-k2.0.21")
 
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
 
@@ -102,6 +100,11 @@ tasks.runServer {
     // dependsOn(subprojects.map { it.tasks.build })
     minecraftVersion(mcVersion)
     downloadPlugins {
-        github("zp4rker", "bukkot", "v2.0.0-k2.0.21", "bukkot-2.0.0-k2.0.21.jar")
+        github("zp4rker", "bukkot", "v2.1.1-k2.0.21", "bukkot-2.1.1-k2.0.21.jar")
     }
+    javaLauncher = javaToolchains.launcherFor {
+        vendor = JvmVendorSpec.JETBRAINS
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+    jvmArgs("-XX:+AllowEnhancedClassRedefinition")
 }
