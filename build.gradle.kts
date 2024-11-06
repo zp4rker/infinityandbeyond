@@ -86,7 +86,6 @@ subprojects {
     }
 }
 
-// evaluationDependsOnChildren()
 subprojects.forEach {
     try {
         tasks.runServer.get().pluginJars(it.tasks["shadowJar"].property("archiveFile")!!)
@@ -96,7 +95,6 @@ subprojects.forEach {
 }
 
 tasks.runServer {
-    // dependsOn(subprojects.map { it.tasks.build })
     minecraftVersion(mcVersion)
     downloadPlugins {
         github("zp4rker", "bukkot", "v2.1.1-k2.0.21", "bukkot-2.1.1-k2.0.21.jar")
