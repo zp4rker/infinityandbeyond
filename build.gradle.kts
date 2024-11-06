@@ -19,15 +19,15 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT")
-    compileOnly("com.zp4rker:bukkot:2.1.1-k2.0.21")
+    api("io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT")
+    api("com.zp4rker:bukkot:2.1.1-k2.0.21")
 
-    implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
+    api("co.aikar:acf-paper:0.5.1-SNAPSHOT")
 
-    compileOnly("com.j256.ormlite:ormlite-jdbc:6.1")
+    api("com.j256.ormlite:ormlite-jdbc:6.1")
     compileOnly("org.apache.logging.log4j:log4j-core:2.22.1") // To change ormlite logger level
 
-    compileOnly("org.jetbrains:annotations:24.1.0")
+    api("org.jetbrains:annotations:24.1.0")
 }
 
 tasks {
@@ -55,46 +55,45 @@ tasks.processResources {
     }
 }
 
-// subprojects {
-//     apply(plugin = "org.jetbrains.kotlin.jvm")
-//
-//     repositories {
-//         mavenCentral()
-//         maven("https://papermc.io/repo/repository/maven-public/")
-//     }
-//
-//     dependencies {
-//         compileOnly("io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT")
-//         compileOnly("com.zp4rker:bukkot:2.1.0-k2.0.21")
-//     }
-//
-//     tasks.jar {
-//         archiveFileName = "${rootProject.name}-${this@subprojects.name}-${this@subprojects.version}.jar"
-//     }
-//
-//     tasks.processResources {
-//         filteringCharset = "UTF-8"
-//         filesMatching("**/plugin.yml") {
-//             val capitalised = this@subprojects.name.replaceFirstChar { it.uppercase(Locale.getDefault()) }
-//             expand(
-//                 "pluginName" to "InfinityAndBeyond-${capitalised}",
-//                 "version" to this@subprojects.version,
-//                 "description" to "${rootProject.description} [${this@subprojects.name}]",
-//                 "pluginPrefix" to "IAB-${capitalised}",
-//                 "mcVersion" to mcVersion
-//             )
-//         }
-//     }
-// }
-//
+subprojects {
+    apply(plugin = "org.jetbrains.kotlin.jvm")
+
+    repositories {
+        mavenCentral()
+        maven("https://papermc.io/repo/repository/maven-public/")
+        maven("https://repo.aikar.co/content/groups/aikar/")
+    }
+
+    dependencies {
+        compileOnly(rootProject)
+    }
+
+    tasks.jar {
+        archiveFileName = "${rootProject.name}-${this@subprojects.name}-${rootProject.version}.jar"
+    }
+
+    tasks.processResources {
+        filteringCharset = "UTF-8"
+        filesMatching("**/plugin.yml") {
+            expand(
+                "pluginName" to "InfinityAndBeyond-${this@subprojects.name}",
+                "version" to rootProject.version,
+                "description" to "${rootProject.description} [${this@subprojects.name}]",
+                "pluginPrefix" to "IAB-${this@subprojects.name}",
+                "mcVersion" to mcVersion
+            )
+        }
+    }
+}
+
 // evaluationDependsOnChildren()
-// subprojects.forEach {
-//     try {
-//         tasks.runServer.get().pluginJars(it.tasks["shadowJar"].property("archiveFile")!!)
-//     } catch (e: Exception) {
-//         tasks.runServer.get().pluginJars(it.tasks["jar"].property("archiveFile")!!)
-//     }
-// }
+subprojects.forEach {
+    try {
+        tasks.runServer.get().pluginJars(it.tasks["shadowJar"].property("archiveFile")!!)
+    } catch (e: Exception) {
+        tasks.runServer.get().pluginJars(it.tasks["jar"].property("archiveFile")!!)
+    }
+}
 
 tasks.runServer {
     // dependsOn(subprojects.map { it.tasks.build })
