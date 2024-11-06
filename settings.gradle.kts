@@ -4,3 +4,4 @@ plugins {
 
 rootProject.name = "infinityandbeyond"
 include("buildmode")
+include("testing")

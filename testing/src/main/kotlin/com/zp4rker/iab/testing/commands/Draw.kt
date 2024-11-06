@@ -1,4 +1,4 @@
-package com.zp4rker.iab.commands
+package com.zp4rker.iab.testing.commands
 
 import co.aikar.commands.BaseCommand
 import co.aikar.commands.annotation.CommandAlias
@@ -16,9 +16,9 @@ import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.util.Vector
 import java.util.concurrent.TimeUnit
 
-@CommandAlias("debug")
-object Debug : BaseCommand() {
-    @Subcommand("draw cube")
+@CommandAlias("draw")
+object Draw : BaseCommand() {
+    @Subcommand("cube")
     fun drawCube(player: Player, @Default("5") size: Int) {
         val start = player.location.toBlockLocation().add(2.0, 0.0, 0.0)
         val end = start.clone().add(size.toDouble(), size.toDouble(), size.toDouble())
@@ -35,7 +35,7 @@ object Debug : BaseCommand() {
         }
     }
 
-    @Subcommand("draw prism")
+    @Subcommand("prism")
     fun drawPrism(player: Player, @Default("5") width: Int, @Default("3") height: Int) {
         val start = player.location.toBlockLocation().add(2.0, 0.0, 0.0)
         val end = start.clone().add(width.toDouble(), height.toDouble(), width.toDouble())

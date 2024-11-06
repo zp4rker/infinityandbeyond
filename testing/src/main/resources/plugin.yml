@@ -1,0 +1,10 @@
+main: com.zp4rker.iab.testing.IABTesting
+api-version: ${mcVersion}
+depend:
+  - Bukkot
+  - InfinityAndBeyond
+
+name: ${pluginName}
+prefix: ${pluginPrefix}
+version: ${version}
+description: ${description}

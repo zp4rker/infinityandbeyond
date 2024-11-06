@@ -2,7 +2,6 @@ package com.zp4rker.iab
 
 import co.aikar.commands.PaperCommandManager
 import com.zp4rker.bukkot.extensions.register
-import com.zp4rker.iab.commands.Debug
 import com.zp4rker.iab.db.DBManager
 import com.zp4rker.iab.listeners.WelcomeMessage
 import com.zp4rker.iab.prompts.ExplorerSetup
@@ -38,9 +37,7 @@ class InfinityAndBeyond : JavaPlugin() {
 
     private fun registerCommands() {
         val manager = PaperCommandManager(this)
-        listOf(
-            Debug
-        ).forEach { manager.registerCommand(it) }
+        // listOf().forEach { manager.registerCommand(it) }
     }
 
     private fun registerListeners() {
